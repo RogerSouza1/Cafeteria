@@ -101,7 +101,7 @@ public class formCadastro extends javax.swing.JFrame {
 
         comboxAdm.setBackground(new java.awt.Color(204, 204, 204));
         comboxAdm.setForeground(new java.awt.Color(51, 51, 51));
-        comboxAdm.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1" }));
+        comboxAdm.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Usuário", "Administrador" }));
 
         btnRetornar.setBackground(new java.awt.Color(204, 204, 204));
         btnRetornar.setForeground(new java.awt.Color(51, 51, 51));
@@ -279,7 +279,7 @@ public class formCadastro extends javax.swing.JFrame {
     private void btnAdd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdd1MouseClicked
         DefaultTableModel MdlTableUser = (DefaultTableModel) tableUser.getModel();
 
-        String nivelAdm = comboxAdm.getSelectedItem().toString();
+        int nivelAdm = comboxAdm.getSelectedIndex();
         String idUserStr = String.valueOf(idUser);
         idUser++;
         String nome = this.txtNome.getText();
