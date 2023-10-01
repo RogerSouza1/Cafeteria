@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 
 public class ConectarDAO {
 
+
     String[] sql = new String[5];
 
     int ult = sql.length - 1;
@@ -75,6 +76,7 @@ public class ConectarDAO {
             }
 
         }
-
     }
 }
+
+  
