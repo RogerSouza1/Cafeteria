@@ -12,8 +12,8 @@ public class ConectarDAO {
     String[] sql = new String[5];
 
     int ult = sql.length - 1;
-    Connection con;
-    PreparedStatement ps;
+    public Connection con = null;
+    public PreparedStatement ps = null;
 
     public ConectarDAO() {
 
