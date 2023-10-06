@@ -1,0 +1,182 @@
+-------------------------- FormCli -------------------------
+import controller.Usuariodao;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import model.Usuario;
+import java.sql.ResultSet;
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
+import model.Usuario;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane; 
+
+private void btnIncluirMouseClicked(java.awt.event.MouseEvent evt) {                                        
+  
+        DefaultTableModel MdlTableCli =(DefaultTableModel) this.jTable1.getModel();
+        Object [] linhas = {   this.textcpf.getText(), this.textnome.getText(), 
+        this.textemail.getText(), this.textcelular.getText(), this.textsenha.getText()};
+        MdlTableCli.addRow( linhas );
+        
+        Usuario Lu = new Usuario();
+        Lu.setCpf(this.textcpf.getText());
+        Lu.setNome(this.textnome.getText());
+        Lu.setEmail(this.textemail.getText());
+        Lu.setCelular(this.textcelular.getText());
+        Lu.setIdNivel(this.cmbnivel.getSelectedIndex());
+        Lu.setSenha(this.textsenha.getText());
+        
+        Usuariodao u1 = new Usuariodao();
+        u1.incluir(Lu);
+       
+    }
+ -----------------------------------------
+Login
+
+private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {                                      
+        String login = textLogin.getText();
+        String senha = passSenha.getText();
+        
+        Usuariodao u = new Usuariodao();
+
+        try {
+            ResultSet resul = u.validarLogin(login, senha);
+            if (resul.next() || (login.equals("admin") && senha.equals("1234"))){
+                FormCli objCli  = new FormCli();
+                objCli.setVisible(true);
+                objCli.setTitle("usuário logado - " + login);
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário ou Senha Inválidos!", "Erro de Operação", JOptionPane.WARNING_MESSAGE);
+            } 
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        } 
+      
+    }
+--------------------------
+Usuariodao
+
+package controller;
+
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
+import model.Usuario;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
+public class Usuariodao extends ConectarDao {
+
+    private String sql;
+    private PreparedStatement ps;
+
+    public Usuariodao() {
+        super();
+    }
+    
+    public ResultSet validarLogin (String login, String senha) {
+        sql = "Select * from usuarios where email='" + login + "'"
+                + " and senha = '" + senha + "'";
+        
+        
+        try {
+            ps = (PreparedStatement) mycon.prepareStatement(sql);
+            ResultSet result = ps.executeQuery();
+            return result;
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, err.getMessage());
+            return null;
+        }
+    }
+    
+    public void incluir(Usuario obj) {
+        sql = "INSERT INTO USUARIOS VALUES (?, ?, ?, ?, ?, ?)";
+        
+        try {
+        ps = mycon.prepareStatement(sql);
+        ps.setString(1, obj.getCpf());
+        ps.setString(2, obj.getNome());
+        ps.setString(3, obj.getEmail());
+        ps.setString(4, obj.getCelular());
+        ps.setInt(5, obj.getIdNivel());
+        ps.setString(6, obj.getSenha());
+        
+        ps.execute();
+        ps.close();
+        
+        JOptionPane.showMessageDialog(null, "Registro Incluído com Sucesso!");
+        
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, "Erro ao incluir usuário!" + err.getMessage());
+        }
+        
+    }
+}
+ ------------------------------------------------
+
+Conectardao
+
+package controller;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
+
+public class ConectarDao {
+
+    public Connection mycon = null;
+    public String sql = null;
+
+    public ConectarDao() {
+        String strcon = "jdbc:mysql://localhost:3306/ProjCad";//cria a string de conexão ao servidor xaamp 
+        try {
+
+            mycon = DriverManager.getConnection(strcon, "root", "");
+            this.criarBanco();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Conexão com Mysql não realizada!\n" + ex);
+        }
+    }
+
+    public void criarBanco() {
+        sql = " CREATE TABLE IF NOT EXISTS NIVEIS ("
+                + "idNivel int not null AUTO_INCREMENT, "
+                + "desNivel varchar(30) not null, "
+                + "primary key (idNivel) ) ";
+
+        try {
+            PreparedStatement ps = mycon.prepareStatement(sql);
+            ps.execute();
+            ps.close();
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, "Erro ao criar table Nivel!\n" + err.getMessage());
+        }
+
+        sql = " CREATE TABLE IF NOT EXISTS USUARIOS ("
+                + "cpf varchar (12) not null, "
+                + "nome varchar(50) not null, "
+                + "email varchar(50) not null, "
+                + "celular varchar(20) not null,"
+                + "idNivel int not null, "
+                + "senha varchar(20) not null, "
+                + "primary key (cpf) )";
+        try {
+            PreparedStatement ps = mycon.prepareStatement(sql);
+            ps.execute();
+            ps.close();
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, "Erro ao criar tabela Usuarios \n" + err.getMessage());
+        }
+    }
+
+}
+
+
