@@ -1,20 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
+import controller.UsuarioDAO;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Leaqu
- */
 public class formLogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
     public formLogin() {
         initComponents();
     }
@@ -123,26 +115,34 @@ public class formLogin extends javax.swing.JFrame {
     private void btnEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseClicked
         String login = txtLogin.getText();
         String senha = txtSenha.getText();
-        
-        if (!login.equals("admin")  || !senha.equals("1234")){
-            JOptionPane.showConfirmDialog(
-                    null,
-                    "Usuário ou Senha Inválido",
-                    "Erro na Operação",
-                    JOptionPane.WARNING_MESSAGE);
-            txtLogin.requestFocus();
-            txtLogin.setText("");
-            txtSenha.setText("");     
+
+        UsuarioDAO u = new UsuarioDAO();
+
+        try {
+            ResultSet resul = u.validarLogin(login, senha);
+
+            if (resul.next() || (login.equals("admin") && senha.equals("1234"))) {
+
+                this.setVisible(false);
+                formCadastro objCadastro = new formCadastro();
+                objCadastro.setVisible(true);
+                objCadastro.setTitle("usuário logado - " + login);
+            } else {
+                JOptionPane.showConfirmDialog(
+                        null,
+                        "Usuário ou Senha Inválido",
+                        "Erro na Operação",
+                        JOptionPane.WARNING_MESSAGE);
+                txtLogin.requestFocus();
+                txtLogin.setText("");
+                txtSenha.setText("");
+            }
+
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, err.getMessage());
         }
-        
-        // verificar a tela principal para o admin ou usuário
-        
-            this.setVisible(false);
-            formCadastro objCadastro = new formCadastro();
-            objCadastro.setVisible(true);
-            this.setVisible(false);
-        
-        
+
+
     }//GEN-LAST:event_btnEntrarMouseClicked
 
     /**

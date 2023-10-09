@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 
 public class ConectarDAO {
 
-
     String[] sql = new String[5];
 
     int ult = sql.length - 1;
@@ -54,11 +53,13 @@ public class ConectarDAO {
                 + "primary key (id_Pedido))";
 
         sql[4] = "CREATE TABLE IF NOT EXISTS USUARIO("
-                + "id_Usuario int (100) not null,"
                 + "id_Nivel_Admin int (3) not null,"
-                + "login varchar(50) not null,"
+                + "cpf varchar(100) not null,"
+                + "nome varchar(100) not null,"
+                + "telefone varchar(100) not null,"
+                + "email varchar(50) not null,"
                 + "senha varchar(20) not null,"
-                + "primary key (id_Usuario))";
+                + "primary key (cpf))";
 
         for (int i = 0; i < sql.length; i++) {
 
