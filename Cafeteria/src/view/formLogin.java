@@ -4,6 +4,16 @@
  */
 package view;
 
+import controller.UsuarioDAO;
+import javax.swing.JOptionPane;
+import model.Usuario;
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
+import model.Usuario;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -123,26 +133,34 @@ public class formLogin extends javax.swing.JFrame {
     private void btnEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarMouseClicked
         String login = txtLogin.getText();
         String senha = txtSenha.getText();
-        
-        if (!login.equals("admin")  || !senha.equals("1234")){
-            JOptionPane.showConfirmDialog(
-                    null,
-                    "Usuário ou Senha Inválido",
-                    "Erro na Operação",
-                    JOptionPane.WARNING_MESSAGE);
-            txtLogin.requestFocus();
-            txtLogin.setText("");
-            txtSenha.setText("");     
+
+        UsuarioDAO u = new UsuarioDAO();
+
+        try {
+            ResultSet resul = u.validarLogin(login, senha);
+
+            if (resul.next() || (login.equals("admin") && senha.equals("1234"))) {
+
+                this.setVisible(false);
+                formCadastro objCadastro = new formCadastro();
+                objCadastro.setVisible(true);
+                objCadastro.setTitle("usuário logado - " + login);
+            } else {
+                JOptionPane.showConfirmDialog(
+                        null,
+                        "Usuário ou Senha Inválido",
+                        "Erro na Operação",
+                        JOptionPane.WARNING_MESSAGE);
+                txtLogin.requestFocus();
+                txtLogin.setText("");
+                txtSenha.setText("");
+            }
+
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, err.getMessage());
         }
-        
-        // verificar a tela principal para o admin ou usuário
-        
-            this.setVisible(false);
-            formCadastro objCadastro = new formCadastro();
-            objCadastro.setVisible(true);
-            this.setVisible(false);
-        
-        
+
+
     }//GEN-LAST:event_btnEntrarMouseClicked
 
     /**
