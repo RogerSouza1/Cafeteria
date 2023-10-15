@@ -195,9 +195,9 @@ public class formCadastro extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
+                        .addGap(26, 26, 26)
                         .addComponent(btnAdd1, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
+                        .addGap(32, 32, 32)
                         .addComponent(btnVoltar)
                         .addGap(70, 70, 70))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -224,7 +224,7 @@ public class formCadastro extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton4)
                             .addComponent(jButton3))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(74, Short.MAX_VALUE))))
         );
 
         tableUser.setBackground(new java.awt.Color(255, 255, 204));
