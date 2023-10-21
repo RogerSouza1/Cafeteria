@@ -3,10 +3,11 @@ package model;
 public class Pedido {
     
     private int id_pedido;
-    private int id_usuario;
-    private int id_item;
-    private boolean pedido_fechado;
-
+    private int mesa;
+    private String produto;
+    private int quantidade;
+    private double valor;
+    
     public int getId_pedido() {
         return id_pedido;
     }
@@ -14,31 +15,38 @@ public class Pedido {
     public void setId_pedido(int id_pedido) {
         this.id_pedido = id_pedido;
     }
-
-    public int getId_usuario() {
-        return id_usuario;
-    }
-
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
-    }
-
-    public int getId_item() {
-        return id_item;
-    }
-
-    public void setId_item(int id_item) {
-        this.id_item = id_item;
-    }
-
-    public boolean isPedido_fechado() {
-        return pedido_fechado;
-    }
-
-    public void setPedido_fechado(boolean pedido_fechado) {
-        this.pedido_fechado = pedido_fechado;
-    }
     
+    public int getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(int mesa) {
+        this.mesa = mesa;
+    }
+
+    public String getProduto() {
+        return produto;
+    }
+
+    public void setProduto(String produto) {
+        this.produto = produto;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
     
     
 }

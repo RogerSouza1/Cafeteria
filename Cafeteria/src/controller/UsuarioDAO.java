@@ -15,6 +15,44 @@ public class UsuarioDAO extends ConectarDAO {
         super();
     }
     
+    public void excluir (String cpf) {
+        sql = "DELETE FROM USUARIO WHERE CPF = '" + cpf + "'";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.execute();
+            ps.close();
+            JOptionPane.showMessageDialog(null, "Registro Excluido com Sucesso!");
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir usuário!" + err.getMessage());
+        }
+    }
+    
+    public ResultSet buscar (Usuario obj){
+        sql = "SELECT * FROM USUARIO WHERE CPF = ?";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, obj.getCPF());
+            return ps.executeQuery();
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null,"Erro ao buscar usuário!" + err.getMessage());
+            return null;
+        }
+    }
+    
+    public ResultSet buscartodos() {
+        sql = "SELECT * FROM USUARIO ORDER BY nome ";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            return ps.executeQuery();
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar usuário!" + err.getMessage());
+            return null;
+        }
+    }
+    
     public ResultSet validarLogin(String login, String senha) {
         
         sql = "Select * from usuario where email ='" + login + "' and senha ='" + senha + "'";

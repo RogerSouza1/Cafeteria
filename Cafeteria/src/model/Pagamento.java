@@ -1,41 +1,50 @@
 package model;
 
 public class Pagamento {
-    private int id_pagamento;
-    private int id_pedido;
-    private String data_hora;
-    private String forma_pagamento;
+    
+    private int id;
+    private int mesa;
+    private double total;
+    private String formaPagamento;
+    boolean pedidoFechado;
 
-    public int getId_pagamento() {
-        return id_pagamento;
+    public int getId() {
+        return id;
     }
 
-    public void setId_pagamento(int id_pagamento) {
-        this.id_pagamento = id_pagamento;
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getMesa() {
+        return mesa;
     }
 
-    public int getId_pedido() {
-        return id_pedido;
+    public void setMesa(int mesa) {
+        this.mesa = mesa;
     }
 
-    public void setId_pedido(int id_pedido) {
-        this.id_pedido = id_pedido;
+    public double getTotal() {
+        return total;
     }
 
-    public String getData_hora() {
-        return data_hora;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
-    public void setData_hora(String data_hora) {
-        this.data_hora = data_hora;
+    public String getFormaPagamento() {
+        return formaPagamento;
     }
 
-    public String getForma_pagamento() {
-        return forma_pagamento;
+    public void setFormaPagamento(String formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
 
-    public void setForma_pagamento(String forma_pagamento) {
-        this.forma_pagamento = forma_pagamento;
+    public boolean isPedidoFechado() {
+        return pedidoFechado;
+    }
+
+    public void setPedidoFechado(boolean pedidoFechado) {
+        this.pedidoFechado = pedidoFechado;
     }
     
     

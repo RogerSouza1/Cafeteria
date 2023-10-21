@@ -117,16 +117,30 @@ public class formLogin extends javax.swing.JFrame {
         String senha = txtSenha.getText();
 
         UsuarioDAO u = new UsuarioDAO();
+        
+        if (login.equals("admin") && senha.equals("1234")){
+                this.setVisible(false);
+                    formCadastro objCadastro = new formCadastro();
+                    objCadastro.setVisible(true);
+                    objCadastro.setTitle("admin logado - " + login);
+        } else {
 
         try {
             ResultSet resul = u.validarLogin(login, senha);
 
-            if (resul.next() || (login.equals("admin") && senha.equals("1234"))) {
-
-                this.setVisible(false);
-                formCadastro objCadastro = new formCadastro();
-                objCadastro.setVisible(true);
-                objCadastro.setTitle("usuário logado - " + login);
+            if (resul.next()) {
+                int nivel = resul.getInt("id_Nivel_Admin");
+                if (nivel == 2) {
+                    this.setVisible(false);
+                    formCadastro objCadastro = new formCadastro();
+                    objCadastro.setVisible(true);
+                    objCadastro.setTitle("admin logado - " + login);
+                } else {
+                    this.setVisible(false);
+                    formPedido objPedido = new formPedido();
+                    objPedido.setVisible(true);
+                    objPedido.setTitle("funcionario logado - " + login);
+                }
             } else {
                 JOptionPane.showConfirmDialog(
                         null,
@@ -137,12 +151,14 @@ public class formLogin extends javax.swing.JFrame {
                 txtLogin.setText("");
                 txtSenha.setText("");
             }
+            
+            
 
         } catch (SQLException err) {
             JOptionPane.showMessageDialog(null, err.getMessage());
         }
 
-
+        }
     }//GEN-LAST:event_btnEntrarMouseClicked
 
     /**
