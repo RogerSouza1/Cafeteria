@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 public class PedidoDAO extends ConectarDAO {
 
     private String sql;
+    private String sql2;
     private PreparedStatement ps;
 
     public PedidoDAO() {
@@ -65,7 +66,7 @@ public class PedidoDAO extends ConectarDAO {
             ps.setString(2, ped.getProduto());
             ps.setInt(3, ped.getQuantidade());
             ps.setBigDecimal(4, BigDecimal.valueOf(ped.getValor()));
-
+            
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected > 0) {

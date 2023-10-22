@@ -37,11 +37,10 @@ public class ConectarDAO {
                 + ")";
 
         sql[1] = "CREATE TABLE IF NOT EXISTS PAGAMENTO ("
-                + "id_Pagamento INT NOT NULL,"
-                + "mesa VARCHAR(100) DEFAULT NULL,"
-                + "total DECIMAL(7,2) NOT NULL,"
+                + "id_Pagamento INT AUTO_INCREMENT NOT NULL,"
+                + "mesa INT NOT NULL,"
+                + "total DOUBLE NOT NULL,"
                 + "forma_Pagamento VARCHAR(100) NOT NULL,"
-                + "pedidoFechado BIT NOT NULL,"
                 + "PRIMARY KEY (id_Pagamento)"
                 + ")";
 

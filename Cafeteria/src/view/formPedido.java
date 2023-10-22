@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import model.Pagamento;
 
 public class formPedido extends javax.swing.JFrame {
 
@@ -86,6 +87,11 @@ public class formPedido extends javax.swing.JFrame {
         jLabel5.setText("Valor");
 
         txtValor.setEditable(false);
+        txtValor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtValorActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -110,6 +116,16 @@ public class formPedido extends javax.swing.JFrame {
         });
 
         btnFechar.setText("Fechar Pedido");
+        btnFechar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFecharMouseClicked(evt);
+            }
+        });
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
 
         btnIncluir.setText("Incluir");
         btnIncluir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -257,16 +273,16 @@ public class formPedido extends javax.swing.JFrame {
         String valorString = this.txtValor.getText();
         valorString = valorString.replace(",", ".");
         double valor = Double.parseDouble(valorString);
-        double total = valor * quantidade;
-
+        double totalItem = valor * quantidade;
+        
         jSpinner1.setValue(0);
 
         Pedido ped = new Pedido();
         ped.setMesa(mesa);
         ped.setProduto(produto);
         ped.setQuantidade(quantidade);
-        ped.setValor(valor);
-
+        ped.setValor(totalItem);
+        
         PedidoDAO p1 = new PedidoDAO();
         p1.inclur(ped);
         
@@ -395,6 +411,21 @@ public class formPedido extends javax.swing.JFrame {
     private void btnTodosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTodosMouseClicked
         this.carregarPedidos();
     }//GEN-LAST:event_btnTodosMouseClicked
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void btnFecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFecharMouseClicked
+        this.setVisible(false);
+        
+        formPagamento pagamento = new formPagamento();
+        pagamento.setVisible(true);
+    }//GEN-LAST:event_btnFecharMouseClicked
+
+    private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtValorActionPerformed
 
     /**
      * @param args the command line arguments
