@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 public class PedidoDAO extends ConectarDAO {
 
     private String sql;
-    private String sql2;
     private PreparedStatement ps;
 
     public PedidoDAO() {
@@ -33,11 +32,11 @@ public class PedidoDAO extends ConectarDAO {
     }
 
     public ResultSet buscarPedidos(Pedido ped) {
-        sql = "SELECT * FROM PEDIDO WHERE mesa = ?";
+        sql = "SELECT * FROM PEDIDO WHERE comanda = ?";
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, ped.getMesa());
+            ps.setInt(1, ped.getComanda());
             return ps.executeQuery();
         } catch (SQLException err) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar pedidos!" + err.getMessage());
@@ -58,11 +57,11 @@ public class PedidoDAO extends ConectarDAO {
     }
 
     public void inclur(Pedido ped) {
-        sql = "INSERT INTO PEDIDO (mesa, produto, quantidade, preco) VALUES (?, ?, ?, ?)";
+        sql = "INSERT INTO PEDIDO (comanda, produto, quantidade, preco) VALUES (?, ?, ?, ?)";
 
         try {
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, ped.getMesa());
+            ps.setInt(1, ped.getComanda());
             ps.setString(2, ped.getProduto());
             ps.setInt(3, ped.getQuantidade());
             ps.setBigDecimal(4, BigDecimal.valueOf(ped.getValor()));

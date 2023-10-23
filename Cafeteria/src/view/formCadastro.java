@@ -279,7 +279,7 @@ public class formCadastro extends javax.swing.JFrame {
         String email = this.txtEmail.getText();
         String senha = this.txtSenha.getText();
 
-        Object[] linhas = {nivelAdm, nome, CPF, email, tel, senha};
+        Object[] linhas = {nivelAdm, CPF, nome, tel, email, senha};
 
         MdlTableUser.addRow(linhas);
 

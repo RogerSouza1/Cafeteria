@@ -117,46 +117,57 @@ public class formLogin extends javax.swing.JFrame {
         String senha = txtSenha.getText();
 
         UsuarioDAO u = new UsuarioDAO();
-        
-        if (login.equals("admin") && senha.equals("1234")){
-                this.setVisible(false);
-                    formCadastro objCadastro = new formCadastro();
-                    objCadastro.setVisible(true);
-                    objCadastro.setTitle("admin logado - " + login);
+
+        if (login.equals("admin") && senha.equals("1234")) {
+            this.setVisible(false);
+            formCadastro objCadastro = new formCadastro();
+            objCadastro.setVisible(true);
+            objCadastro.setTitle("admin logado - " + login);
         } else {
 
-        try {
-            ResultSet resul = u.validarLogin(login, senha);
+            try {
+                ResultSet resul = u.validarLogin(login, senha);
 
-            if (resul.next()) {
-                int nivel = resul.getInt("id_Nivel_Admin");
-                if (nivel == 2) {
-                    this.setVisible(false);
-                    formCadastro objCadastro = new formCadastro();
-                    objCadastro.setVisible(true);
-                    objCadastro.setTitle("admin logado - " + login);
+                if (resul.next()) {
+                    int nivel = resul.getInt("id_Nivel_Admin");
+
+                    switch (nivel) {
+                        case 0:
+                            this.setVisible(false);
+                            formComprovante objComprovante = new formComprovante();
+                            objComprovante.setVisible(true);
+                            objComprovante.setTitle("caixa logado - " + login);
+                            break;
+
+                        case 1:
+                            this.setVisible(false);
+                            formPedido objPedido = new formPedido();
+                            objPedido.setVisible(true);
+                            objPedido.setTitle("funcionario logado - " + login);
+                            break;
+
+                        case 2:
+                            this.setVisible(false);
+                            formCadastro objCadastro = new formCadastro();
+                            objCadastro.setVisible(true);
+                            objCadastro.setTitle("admin logado - " + login);
+                            break;
+
+                    }
                 } else {
-                    this.setVisible(false);
-                    formPedido objPedido = new formPedido();
-                    objPedido.setVisible(true);
-                    objPedido.setTitle("funcionario logado - " + login);
+                    JOptionPane.showConfirmDialog(
+                            null,
+                            "Usuário ou Senha Inválido",
+                            "Erro na Operação",
+                            JOptionPane.WARNING_MESSAGE);
+                    txtLogin.requestFocus();
+                    txtLogin.setText("");
+                    txtSenha.setText("");
                 }
-            } else {
-                JOptionPane.showConfirmDialog(
-                        null,
-                        "Usuário ou Senha Inválido",
-                        "Erro na Operação",
-                        JOptionPane.WARNING_MESSAGE);
-                txtLogin.requestFocus();
-                txtLogin.setText("");
-                txtSenha.setText("");
-            }
-            
-            
 
-        } catch (SQLException err) {
-            JOptionPane.showMessageDialog(null, err.getMessage());
-        }
+            } catch (SQLException err) {
+                JOptionPane.showMessageDialog(null, err.getMessage());
+            }
 
         }
     }//GEN-LAST:event_btnEntrarMouseClicked

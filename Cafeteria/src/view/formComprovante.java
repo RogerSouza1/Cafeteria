@@ -4,6 +4,16 @@
  */
 package view;
 
+import controller.PagamentoDAO;
+import javax.swing.DefaultComboBoxModel;
+import java.sql.PreparedStatement;
+import model.Pagamento;
+import model.Pedido;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author nicol
@@ -27,96 +37,163 @@ public class formComprovante extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
+        comboPag = new javax.swing.JComboBox<>();
+        btnFinalizar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
+        comboBuscar = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        comboComanda = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableComprovante = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jButton1.setText("Voltar");
+        btnVoltar.setText("Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltarMouseClicked(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboPag.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton2.setText("Finalizar Compra");
+        btnFinalizar.setText("Finalizar Compra");
+        btnFinalizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFinalizarMouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Forma de Pagamento:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBuscar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBuscarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Buscar");
+        btnBuscar.setText("Buscar");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nº comanda: ");
+
+        comboComanda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboComanda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboComandaMouseClicked(evt);
+            }
+        });
+
+        jLabel4.setText("ID ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addComponent(comboComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
+                .addComponent(btnBuscar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jComboBox1, 0, 150, Short.MAX_VALUE)
-                            .addComponent(jTextField1)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton3))
+                            .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(53, 53, 53)
-                        .addComponent(jButton1)))
-                .addGap(80, 80, 80))
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(182, 182, 182))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(comboPag, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                            .addComponent(txtID))
+                        .addGap(56, 56, 56))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(comboBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addGap(46, 46, 46))
+                    .addComponent(comboComanda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(comboPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFinalizar)
+                    .addComponent(btnVoltar))
+                .addGap(32, 32, 32))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableComprovante.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Comanda", "Total", "FormaPag", "Fechada?"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableComprovante);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,6 +205,213 @@ public class formComprovante extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        DefaultComboBoxModel buscar = (DefaultComboBoxModel) this.comboBuscar.getModel();
+        buscar.removeAllElements();
+        buscar.addElement("Buscar comanda");
+        buscar.addElement("Buscar comandas pendentes");
+        buscar.addElement("Buscar comandas pagas");
+
+        DefaultComboBoxModel pag = (DefaultComboBoxModel) this.comboPag.getModel();
+        pag.removeAllElements();
+        pag.addElement("");
+        pag.addElement("Dinheiro");
+        pag.addElement("Débito");
+        pag.addElement("Crédito");
+        pag.addElement("PIX");
+
+        DefaultComboBoxModel comanda = (DefaultComboBoxModel) this.comboComanda.getModel();
+        comanda.removeAllElements();
+        comanda.addElement("");
+
+        for (int i = 1; i <= 20; i++) {
+            comanda.addElement(String.valueOf(i)); // Adiciona os números de 1 a 10 como strings
+        }
+
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void comboBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBuscarActionPerformed
+        if (this.comboBuscar.getSelectedIndex() == 0) {
+            while (tableComprovante.getModel().getRowCount() > 0) {
+                    ((DefaultTableModel) tableComprovante.getModel()).removeRow(0);
+            }
+            this.comboComanda.setEnabled(true);
+            this.btnBuscar.setEnabled(true);
+        } else {
+            this.comboComanda.setEnabled(false);
+            this.btnBuscar.setEnabled(false);
+
+            PagamentoDAO pag = new PagamentoDAO();
+            String s = null;
+            ResultSet resul = null;
+
+            int buscar = comboBuscar.getSelectedIndex();
+
+            if (buscar == 1) {
+                s = "N";
+            }
+            if (buscar == 2) {
+                s = "S";
+            }
+
+            while (tableComprovante.getModel().getRowCount() > 0) {
+                ((DefaultTableModel) tableComprovante.getModel()).removeRow(0);
+            }
+
+            resul = pag.buscarComandaTodas(s);
+
+            try {
+                DefaultTableModel tab = (DefaultTableModel) this.tableComprovante.getModel();
+
+                while (resul.next()) {
+
+                    Object[] linha = {
+                        resul.getInt("id_Pagamento"),
+                        resul.getInt("comanda"),
+                        resul.getDouble("total"),
+                        resul.getString("forma_Pagamento"),
+                        resul.getString("pedidoFechado")
+                    };
+
+                    tab.addRow(linha);
+                }
+
+                resul.close();
+            } catch (SQLException err) {
+                JOptionPane.showMessageDialog(null, err.getMessage());
+            }
+
+        }
+
+
+    }//GEN-LAST:event_comboBuscarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+
+        if (btnBuscar.isEnabled() == true) {
+
+            PagamentoDAO pag = new PagamentoDAO();
+
+            int buscar = comboBuscar.getSelectedIndex();
+            String s = null;
+            ResultSet resul = null;
+
+            int comanda = comboComanda.getSelectedIndex();
+
+            if (comanda == 0 && buscar == 0) {
+                JOptionPane.showMessageDialog(null, "Selecione uma comanda válida!");
+            } else {
+
+                while (tableComprovante.getModel().getRowCount() > 0) {
+                    ((DefaultTableModel) tableComprovante.getModel()).removeRow(0);
+                }
+
+                if (buscar == 0) {
+                    resul = pag.buscarComandaPag(comanda);
+                } else {
+                    resul = pag.buscarComandaTodas(s);
+                }
+
+                try {
+                    DefaultTableModel tab = (DefaultTableModel) this.tableComprovante.getModel();
+
+                    while (resul.next()) {
+
+                        Object[] linha = {
+                            resul.getInt("id_Pagamento"),
+                            resul.getInt("comanda"),
+                            resul.getDouble("total"),
+                            resul.getString("forma_Pagamento"),
+                            resul.getString("pedidoFechado")
+                        };
+
+                        tab.addRow(linha);
+                    }
+
+                    resul.close();
+                } catch (SQLException err) {
+                    JOptionPane.showMessageDialog(null, err.getMessage());
+                }
+            }
+
+        }
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
+    private void comboComandaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboComandaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboComandaMouseClicked
+
+    private void btnFinalizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFinalizarMouseClicked
+        PagamentoDAO pag = new PagamentoDAO();
+
+        String idString = this.txtID.getText();
+        int id = 0;
+        String formPag = (String) this.comboPag.getSelectedItem();
+
+        if (!idString.isEmpty()) {
+            id = Integer.parseInt(idString);
+            if (id > 0) {
+                
+                pag.realizarPag(id, formPag);
+                String s = null;
+                ResultSet resul = null;
+
+                int buscar = comboBuscar.getSelectedIndex();
+
+                if (buscar == 1) {
+                    s = "N";
+                }
+                if (buscar == 2) {
+                    s = "S";
+                }
+
+                while (tableComprovante.getModel().getRowCount() > 0) {
+                    ((DefaultTableModel) tableComprovante.getModel()).removeRow(0);
+                }
+
+                resul = pag.buscarComandaTodas(s);
+
+                try {
+                    DefaultTableModel tab = (DefaultTableModel) this.tableComprovante.getModel();
+
+                    while (resul.next()) {
+
+                        Object[] linha = {
+                            resul.getInt("id_Pagamento"),
+                            resul.getInt("comanda"),
+                            resul.getDouble("total"),
+                            resul.getString("forma_Pagamento"),
+                            resul.getString("pedidoFechado")
+                        };
+
+                        tab.addRow(linha);
+                    }
+
+                    resul.close();
+                } catch (SQLException err) {
+                    JOptionPane.showMessageDialog(null, err.getMessage());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "ID Inválido!");
+        }
+
+
+    }//GEN-LAST:event_btnFinalizarMouseClicked
+
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
+        this.setVisible(false);
+        formLogin login = new formLogin();
+        login.setVisible(true);
+
+
+    }//GEN-LAST:event_btnVoltarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -165,16 +449,19 @@ public class formComprovante extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnFinalizar;
+    private javax.swing.JButton btnVoltar;
+    private javax.swing.JComboBox<String> comboBuscar;
+    private javax.swing.JComboBox<String> comboComanda;
+    private javax.swing.JComboBox<String> comboPag;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tableComprovante;
+    private javax.swing.JTextField txtID;
     // End of variables declaration//GEN-END:variables
 }

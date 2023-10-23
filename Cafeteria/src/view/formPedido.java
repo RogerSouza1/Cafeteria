@@ -34,7 +34,7 @@ public class formPedido extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        comboMesa = new javax.swing.JComboBox<>();
+        comboComanda = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         comboProduto = new javax.swing.JComboBox<>();
@@ -49,6 +49,7 @@ public class formPedido extends javax.swing.JFrame {
         btnFechar = new javax.swing.JButton();
         btnIncluir = new javax.swing.JButton();
         btnTodos = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablePedido = new javax.swing.JTable();
 
@@ -61,14 +62,14 @@ public class formPedido extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
-        comboMesa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboComanda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("Mesa");
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Comanda");
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Produto");
 
         comboProduto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -79,11 +80,11 @@ public class formPedido extends javax.swing.JFrame {
         });
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Quantidade");
 
         jLabel5.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Valor");
 
         txtValor.setEditable(false);
@@ -106,6 +107,7 @@ public class formPedido extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("ID");
 
         btnRemover.setText("Remover");
@@ -146,6 +148,13 @@ public class formPedido extends javax.swing.JFrame {
             }
         });
 
+        btnVoltar.setText("Voltar");
+        btnVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVoltarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -155,10 +164,11 @@ public class formPedido extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -173,11 +183,16 @@ public class formPedido extends javax.swing.JFrame {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel5)
                                             .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscar)
-                            .addComponent(btnTodos))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnBuscar)
+                                    .addComponent(btnTodos)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                                .addComponent(btnVoltar)
+                                .addGap(51, 51, 51)))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +209,7 @@ public class formPedido extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboComanda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -215,7 +230,9 @@ public class formPedido extends javax.swing.JFrame {
                             .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                        .addComponent(btnIncluir))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnIncluir)
+                            .addComponent(btnVoltar)))
                     .addComponent(btnFechar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(22, 22, 22))
         );
@@ -229,7 +246,7 @@ public class formPedido extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -267,44 +284,48 @@ public class formPedido extends javax.swing.JFrame {
     private void btnIncluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIncluirMouseClicked
         DefaultTableModel modeltable = (DefaultTableModel) tablePedido.getModel();
 
-        int mesa = this.comboMesa.getSelectedIndex();
+        int comanda = this.comboComanda.getSelectedIndex();
         String produto = (String) this.comboProduto.getSelectedItem();
         int quantidade = (int) this.jSpinner1.getValue();
         String valorString = this.txtValor.getText();
         valorString = valorString.replace(",", ".");
         double valor = Double.parseDouble(valorString);
         double totalItem = valor * quantidade;
-        
+
         jSpinner1.setValue(0);
 
-        Pedido ped = new Pedido();
-        ped.setMesa(mesa);
-        ped.setProduto(produto);
-        ped.setQuantidade(quantidade);
-        ped.setValor(totalItem);
-        
-        PedidoDAO p1 = new PedidoDAO();
-        p1.inclur(ped);
-        
-        this.btnBuscarMouseClicked(evt);
-        
+        if (comanda != 0) {
+            if (quantidade > 0){
+            Pedido ped = new Pedido();
+            ped.setComanda(comanda);
+            ped.setProduto(produto);
+            ped.setQuantidade(quantidade);
+            ped.setValor(totalItem);
+
+            PedidoDAO p1 = new PedidoDAO();
+            p1.inclur(ped);
+
+            this.btnBuscarMouseClicked(evt);
+            } else {
+                JOptionPane.showMessageDialog(null, "Quantidade inválida");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Número da mesa inválido");
+        }
+
+
     }//GEN-LAST:event_btnIncluirMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        DefaultComboBoxModel mesa = (DefaultComboBoxModel) this.comboMesa.getModel();
+        DefaultComboBoxModel comanda = (DefaultComboBoxModel) this.comboComanda.getModel();
 
-        mesa.removeAllElements();
-        mesa.addElement("");
-        mesa.addElement("1");
-        mesa.addElement("2");
-        mesa.addElement("3");
-        mesa.addElement("4");
-        mesa.addElement("5");
-        mesa.addElement("6");
-        mesa.addElement("7");
-        mesa.addElement("8");
-        mesa.addElement("9");
-        mesa.addElement("10");
+        comanda.removeAllElements();
+
+        comanda.addElement("");
+
+        for (int i = 1; i <= 20; i++) {
+            comanda.addElement(String.valueOf(i));
+        }
 
         DefaultComboBoxModel produtos = (DefaultComboBoxModel) this.comboProduto.getModel();
 
@@ -327,14 +348,12 @@ public class formPedido extends javax.swing.JFrame {
             "Salada de Frutas"
         };
 
-        
-        
-        for (int i=0; i < produto.length; i++){
+        for (int i = 0; i < produto.length; i++) {
             produtos.addElement(produto[i]);
         }
-        
+
         SpinnerModel model = new SpinnerNumberModel(1, 1, 50, 1);
-        
+
         this.carregarPedidos();
 
 
@@ -342,7 +361,7 @@ public class formPedido extends javax.swing.JFrame {
 
     private void comboProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboProdutoActionPerformed
         int selectedIndex = comboProduto.getSelectedIndex();
-        
+
         Double[] valor = {
             2.50, // Café
             4.00, // Cappuccino
@@ -367,45 +386,58 @@ public class formPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_comboProdutoActionPerformed
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-        
+
         PedidoDAO p1 = new PedidoDAO();
         Pedido ped = new Pedido();
-        
-        int[] mesas = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        ped.setMesa(mesas[this.comboMesa.getSelectedIndex()]);
-        
-        while (tablePedido.getModel().getRowCount() > 0){
+
+        int[] comandas = new int[20];
+        for (int i = 0; i < 20; i++) {
+            comandas[i] = i;
+        }
+
+        int comanda = this.comboComanda.getSelectedIndex();
+        ped.setComanda(comandas[this.comboComanda.getSelectedIndex()]);
+
+        while (tablePedido.getModel().getRowCount() > 0) {
             ((DefaultTableModel) tablePedido.getModel()).removeRow(0);
         }
-        
+
         try {
             ResultSet pedidos = p1.buscarPedidos(ped);
             DefaultTableModel tab = (DefaultTableModel) this.tablePedido.getModel();
-            
-            while (pedidos.next()){
-                
-                Object [] linha = {
+
+            while (pedidos.next()) {
+
+                Object[] linha = {
                     pedidos.getInt("id_Pedido"),
-                    pedidos.getInt("mesa"),
+                    pedidos.getInt("comanda"),
                     pedidos.getString("produto"),
                     pedidos.getInt("quantidade"),
                     pedidos.getString("preco")
                 };
-                
+
                 tab.addRow(linha);
             }
-            
-                pedidos.close();
-            } catch (SQLException err) {
-                JOptionPane.showMessageDialog(null, err.getMessage());
-            }
+
+            pedidos.close();
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void btnRemoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoverMouseClicked
-        PedidoDAO p = new PedidoDAO();
-        p.excluir(this.txtID.getText());
-        this.btnBuscarMouseClicked(evt);
-        this.txtID.setText("");
+
+        String id = this.txtID.getText();
+
+        if (!(id.isEmpty())) {
+            PedidoDAO p = new PedidoDAO();
+            p.excluir(this.txtID.getText());
+            this.btnBuscarMouseClicked(evt);
+            this.txtID.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Campo ID não pode estar vazio");
+        }
+
     }//GEN-LAST:event_btnRemoverMouseClicked
 
     private void btnTodosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTodosMouseClicked
@@ -418,7 +450,7 @@ public class formPedido extends javax.swing.JFrame {
 
     private void btnFecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFecharMouseClicked
         this.setVisible(false);
-        
+
         formPagamento pagamento = new formPagamento();
         pagamento.setVisible(true);
     }//GEN-LAST:event_btnFecharMouseClicked
@@ -426,6 +458,12 @@ public class formPedido extends javax.swing.JFrame {
     private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtValorActionPerformed
+
+    private void btnVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVoltarMouseClicked
+        this.setVisible(false);
+        formLogin login = new formLogin();
+        login.setVisible(true);
+    }//GEN-LAST:event_btnVoltarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -462,37 +500,37 @@ public class formPedido extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void carregarPedidos(){
+
+    private void carregarPedidos() {
         PedidoDAO p1 = new PedidoDAO();
-        
-        while (tablePedido.getModel().getRowCount() > 0){
+
+        while (tablePedido.getModel().getRowCount() > 0) {
             ((DefaultTableModel) tablePedido.getModel()).removeRow(0);
-        } 
-        
+        }
+
         try {
             ResultSet pedidos = p1.buscarTodos();
             DefaultTableModel tab = (DefaultTableModel) this.tablePedido.getModel();
-            
-            while (pedidos.next()){
-                
-                Object [] linha = {
+
+            while (pedidos.next()) {
+
+                Object[] linha = {
                     pedidos.getInt("id_Pedido"),
-                    pedidos.getInt("mesa"),
+                    pedidos.getInt("comanda"),
                     pedidos.getString("produto"),
                     pedidos.getInt("quantidade"),
                     pedidos.getString("preco")
                 };
-                
+
                 tab.addRow(linha);
             }
-            
-                pedidos.close();
-            } catch (SQLException err) {
-                JOptionPane.showMessageDialog(null, err.getMessage());
-            }
+
+            pedidos.close();
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
     }
-        
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -500,7 +538,8 @@ public class formPedido extends javax.swing.JFrame {
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnTodos;
-    private javax.swing.JComboBox<String> comboMesa;
+    private javax.swing.JButton btnVoltar;
+    private javax.swing.JComboBox<String> comboComanda;
     private javax.swing.JComboBox<String> comboProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

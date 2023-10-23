@@ -5,10 +5,10 @@ import java.math.BigDecimal;
 public class Pagamento {
     
     private int id;
-    private int mesa;
+    private int comanda;
     private double total;
     private String formaPagamento;
-    boolean pedidoFechado;
+    private String pedidoFechado;
 
     public int getId() {
         return id;
@@ -17,12 +17,12 @@ public class Pagamento {
     public void setId(int id) {
         this.id = id;
     }
-    public int getMesa() {
-        return mesa;
+    public int getComanda() {
+        return comanda;
     }
 
-    public void setMesa(int mesa) {
-        this.mesa = mesa;
+    public void setComanda(int comanda) {
+        this.comanda = comanda;
     }
 
     public double getTotal() {
@@ -41,11 +41,11 @@ public class Pagamento {
         this.formaPagamento = formaPagamento;
     }
 
-    public boolean isPedidoFechado() {
+    public String isPedidoFechado() {
         return pedidoFechado;
     }
 
-    public void setPedidoFechado(boolean pedidoFechado) {
+    public void setPedidoFechado(String pedidoFechado) {
         this.pedidoFechado = pedidoFechado;
     }
     

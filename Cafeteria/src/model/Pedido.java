@@ -3,7 +3,7 @@ package model;
 public class Pedido {
     
     private int id_pedido;
-    private int mesa;
+    private int comanda;
     private String produto;
     private int quantidade;
     private double valor;
@@ -16,12 +16,12 @@ public class Pedido {
         this.id_pedido = id_pedido;
     }
     
-    public int getMesa() {
-        return mesa;
+    public int getComanda() {
+        return comanda;
     }
 
-    public void setMesa(int mesa) {
-        this.mesa = mesa;
+    public void setComanda(int comanda) {
+        this.comanda = comanda;
     }
 
     public String getProduto() {

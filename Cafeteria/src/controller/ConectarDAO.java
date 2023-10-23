@@ -29,7 +29,7 @@ public class ConectarDAO {
 
         sql[0] = "CREATE TABLE IF NOT EXISTS PEDIDO ("
                 + "id_Pedido INT AUTO_INCREMENT NOT NULL,"
-                + "mesa INT NOT NULL,"
+                + "comanda INT NOT NULL,"
                 + "produto VARCHAR(100) NOT NULL,"
                 + "quantidade INT NOT NULL,"
                 + "preco DECIMAL(7,2) NOT NULL,"
@@ -38,9 +38,10 @@ public class ConectarDAO {
 
         sql[1] = "CREATE TABLE IF NOT EXISTS PAGAMENTO ("
                 + "id_Pagamento INT AUTO_INCREMENT NOT NULL,"
-                + "mesa INT NOT NULL,"
+                + "comanda INT NOT NULL,"
                 + "total DOUBLE NOT NULL,"
-                + "forma_Pagamento VARCHAR(100) NOT NULL,"
+                + "forma_Pagamento varchar(100) NOT NULL,"
+                + "pedidoFechado varchar(1) NOT NULL,"
                 + "PRIMARY KEY (id_Pagamento)"
                 + ")";
 
