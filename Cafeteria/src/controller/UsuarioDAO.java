@@ -56,7 +56,7 @@ public class UsuarioDAO extends ConectarDAO {
     public ResultSet validarLogin(String login, String senha) {
         
         sql = "Select * from usuario where email ='" + login + "' and senha ='" + senha + "'";
-        
+        System.out.println(sql);
         try {
             ps = (PreparedStatement) con.prepareStatement(sql);
             ResultSet resul = ps.executeQuery();
@@ -85,6 +85,25 @@ public class UsuarioDAO extends ConectarDAO {
             JOptionPane.showMessageDialog(null, "Registro Incluído com Sucesso");
         } catch (SQLException err) {
             JOptionPane.showMessageDialog(null, "Erro ao incluir usuário!" + err.getMessage());
+        }
+    }
+    
+    public void alterar(Usuario user) {
+        sql = "UPDATE usuario SET id_Nivel_Admin = ?, nome = ?, telefone = ?, email = ?, senha = ? WHERE cpf = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, user.getId_nivelAdm());
+            ps.setString(2, user.getNome());
+            ps.setString(3, user.getTelefone());
+            ps.setString(4, user.getEmail());
+            ps.setString(5, user.getSenha());
+            ps.setString(6, user.getCPF());
+            
+            ps.execute();
+            ps.close();
+            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!");
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, "Erro ao alterar!" + err.getMessage());
         }
     }
     

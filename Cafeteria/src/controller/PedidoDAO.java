@@ -65,7 +65,7 @@ public class PedidoDAO extends ConectarDAO {
             ps.setString(2, ped.getProduto());
             ps.setInt(3, ped.getQuantidade());
             ps.setBigDecimal(4, BigDecimal.valueOf(ped.getValor()));
-            
+
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected > 0) {
@@ -83,6 +83,26 @@ public class PedidoDAO extends ConectarDAO {
             ps.close();
         } catch (SQLException err) {
             JOptionPane.showMessageDialog(null, "Erro ao adicionar " + err.getMessage());
+        }
+    }
+
+    public void alterar(Pedido obj) {
+        sql = "UPDATE pedido SET comanda = ?, produto = ?, quantidade = ?, preco = ? WHERE id_Pedido = ?";
+
+        
+        int id_Pedido = obj.getId_pedido();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, obj.getComanda());
+            ps.setString(2, obj.getProduto());
+            ps.setInt(3, obj.getQuantidade());
+            ps.setBigDecimal(4, BigDecimal.valueOf((long) obj.getValor()));
+            ps.setInt(5, id_Pedido);
+            ps.execute();
+            ps.close();
+            JOptionPane.showMessageDialog(null, "Produto Alterado com Sucesso!");
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, "Erro ao Alterar produto" + err.getMessage());
         }
     }
 }

@@ -253,6 +253,11 @@ public class formPedido extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablePedido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePedidoMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablePedido);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -285,6 +290,7 @@ public class formPedido extends javax.swing.JFrame {
         DefaultTableModel modeltable = (DefaultTableModel) tablePedido.getModel();
 
         int comanda = this.comboComanda.getSelectedIndex();
+        int id = Integer.parseInt(this.txtID.getText());
         String produto = (String) this.comboProduto.getSelectedItem();
         int quantidade = (int) this.jSpinner1.getValue();
         String valorString = this.txtValor.getText();
@@ -295,17 +301,28 @@ public class formPedido extends javax.swing.JFrame {
         jSpinner1.setValue(0);
 
         if (comanda != 0) {
-            if (quantidade > 0){
-            Pedido ped = new Pedido();
-            ped.setComanda(comanda);
-            ped.setProduto(produto);
-            ped.setQuantidade(quantidade);
-            ped.setValor(totalItem);
+            if (quantidade > 0) {
+                Pedido ped = new Pedido();
+                PedidoDAO u1 = new PedidoDAO();
+                ped.setComanda(comanda);
+                ped.setProduto(produto);
+                ped.setQuantidade(quantidade);
+                ped.setValor(totalItem);
+                ped.setId_pedido(id);
 
-            PedidoDAO p1 = new PedidoDAO();
-            p1.inclur(ped);
+                try {
+                    ResultSet resul = u1.buscarPedidos(ped);
+                    
+                    if (resul.next()) {
+                        u1.alterar(ped);
+                    } else {
+                        u1.inclur(ped);
+                    }
+                } catch (SQLException err) {
+                    JOptionPane.showMessageDialog(null, err.getMessage());
+                }
 
-            this.btnBuscarMouseClicked(evt);
+                this.btnBuscarMouseClicked(evt);
             } else {
                 JOptionPane.showMessageDialog(null, "Quantidade inválida");
             }
@@ -464,6 +481,22 @@ public class formPedido extends javax.swing.JFrame {
         formLogin login = new formLogin();
         login.setVisible(true);
     }//GEN-LAST:event_btnVoltarMouseClicked
+
+    private void tablePedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePedidoMouseClicked
+        int linhasel = this.tablePedido.getSelectedRow();
+        int colunachave = 1;
+        Object chave = this.tablePedido.getModel().getValueAt(linhasel, colunachave);
+
+        Pedido obj = new Pedido();
+        obj.setId_pedido((int) chave);
+        PedidoDAO u1 = new PedidoDAO();
+        ResultSet resul = u1.buscarPedidos(obj);
+        Pedido Lu = new Pedido();
+        int id = Integer.parseInt(this.txtID.getText());
+        Lu.setId_pedido(id);
+
+
+    }//GEN-LAST:event_tablePedidoMouseClicked
 
     /**
      * @param args the command line arguments

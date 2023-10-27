@@ -1,6 +1,5 @@
 package view;
 
-
 import java.sql.ResultSet;
 import controller.UsuarioDAO;
 import javax.swing.DefaultComboBoxModel;
@@ -231,6 +230,11 @@ public class formCadastro extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableUserMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableUser);
         if (tableUser.getColumnModel().getColumnCount() > 0) {
             tableUser.getColumnModel().getColumn(0).setResizable(false);
@@ -270,18 +274,14 @@ public class formCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdd1MouseClicked
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        DefaultTableModel MdlTableUser = (DefaultTableModel) tableUser.getModel();
 
-        int nivelAdm = comboxAdm.getSelectedIndex();
-        String nome = this.txtNome.getText();
-        String CPF = this.txtCPF.getText();
-        String tel = this.txtTelefone.getText();
-        String email = this.txtEmail.getText();
-        String senha = this.txtSenha.getText();
-
-        Object[] linhas = {nivelAdm, CPF, nome, tel, email, senha};
-
-        MdlTableUser.addRow(linhas);
+        Usuario Lu = new Usuario();
+        Lu.setId_nivelAdm(comboxAdm.getSelectedIndex());
+        Lu.setCPF(this.txtCPF.getText());
+        Lu.setNome(this.txtNome.getText());
+        Lu.setTelefone(this.txtTelefone.getText());
+        Lu.setEmail(this.txtEmail.getText());
+        Lu.setSenha(this.txtSenha.getText());
 
         this.txtNome.setText("");
         this.txtCPF.setText("");
@@ -289,18 +289,20 @@ public class formCadastro extends javax.swing.JFrame {
         this.txtTelefone.setText("");
         this.txtSenha.setText("");
 
-        Usuario Lu = new Usuario();
-        Lu.setId_nivelAdm(nivelAdm);
-        Lu.setCPF(CPF);
-        Lu.setNome(nome);
-        Lu.setTelefone(tel);
-        Lu.setEmail(email);
-        Lu.setSenha(senha);
-
         UsuarioDAO u1 = new UsuarioDAO();
+        ResultSet resul = u1.buscar(Lu);
+        try {
+            if (resul.next()) { // caso exista o cpf então chama u1.alterar()
+                u1.alterar(Lu);
+            } else {
+                u1.incluir(Lu);// caseo não exista o cpf chama u1.incluir()
+            }
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null,
+                    err.getMessage());
+        }
 
-        u1.incluir(Lu);
-
+        this.carregar_usuarios();
     }//GEN-LAST:event_btnAdd1ActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -320,51 +322,77 @@ public class formCadastro extends javax.swing.JFrame {
         mymodel.addElement("Caixa");
         mymodel.addElement("Funcionario");
         mymodel.addElement("Gerente");
-        
+
         this.carregar_usuarios();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-       Usuario obj = new Usuario();
-       
-       obj.setCPF(this.txtCPF.getText());
-       
-       UsuarioDAO u1 = new UsuarioDAO();
-       ResultSet resul = u1.buscar(obj);
-       
-       try {
-           if (resul.next()){
-               this.txtNome.setText(resul.getString("nome"));
-               this.txtEmail.setText(resul.getString("email"));
-               this.txtTelefone.setText(resul.getString("telefone"));
-               this.comboxAdm.setSelectedIndex(resul.getInt("id_Nivel_Admin"));
-               this.txtSenha.setText(resul.getString("senha"));
-           } else {
-               JOptionPane.showMessageDialog(null, "Registro não encontrado!");
-               this.txtCPF.grabFocus();
-           }
-       } catch (SQLException err) {
-           JOptionPane.showMessageDialog(null, err.getMessage() ); 
-       }
+        Usuario obj = new Usuario();
+
+        obj.setCPF(this.txtCPF.getText());
+
+        UsuarioDAO u1 = new UsuarioDAO();
+        ResultSet resul = u1.buscar(obj);
+
+        try {
+            if (resul.next()) {
+                this.txtNome.setText(resul.getString("nome"));
+                this.txtEmail.setText(resul.getString("email"));
+                this.txtTelefone.setText(resul.getString("telefone"));
+                this.comboxAdm.setSelectedIndex(resul.getInt("id_Nivel_Admin"));
+                this.txtSenha.setText(resul.getString("senha"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro não encontrado!");
+                this.txtCPF.grabFocus();
+            }
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, err.getMessage());
+        }
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void btnExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExcluirMouseClicked
         UsuarioDAO u = new UsuarioDAO();
-        
+
         u.excluir(this.txtCPF.getText());
         this.carregar_usuarios();
-        
+
         this.txtNome.setText("");
         this.txtCPF.setText("");
         this.txtEmail.setText("");
         this.txtTelefone.setText("");
         this.txtSenha.setText("");
-        
+
     }//GEN-LAST:event_btnExcluirMouseClicked
 
     private void comboxAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxAdmActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboxAdmActionPerformed
+
+    private void tableUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableUserMouseClicked
+        int linhasel = this.tableUser.getSelectedRow();
+        int colunachave = 1;
+        Object chave = this.tableUser.getModel().getValueAt(linhasel, colunachave);
+        Usuario obj = new Usuario();
+        obj.setCPF((String) chave);
+        UsuarioDAO u1 = new UsuarioDAO();
+        ResultSet resul = u1.buscar(obj);
+        
+        try {
+            if (resul.next()) {
+                this.txtCPF.setText(resul.getString("cpf"));
+                this.txtNome.setText(resul.getString("nome"));
+                this.txtEmail.setText(resul.getString("email"));
+                this.txtTelefone.setText(resul.getString("telefone"));
+                this.comboxAdm.setSelectedIndex(resul.getInt("id_Nivel_Admin"));
+                this.txtSenha.setText(resul.getString("senha"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Registro não encontrado!");
+                this.txtCPF.grabFocus();
+            }
+        } catch (SQLException err) {
+            JOptionPane.showMessageDialog(null, "Erro ao navegar na Jtable!");
+        }
+    }//GEN-LAST:event_tableUserMouseClicked
 
     /**
      * @param args the command line arguments
@@ -414,7 +442,7 @@ public class formCadastro extends javax.swing.JFrame {
             while (todos.next()) {
                 Object[] linha = {
                     todos.getString("id_Nivel_Admin"),
-                    todos.getString("cpf"), 
+                    todos.getString("cpf"),
                     todos.getString("nome"),
                     todos.getString("telefone"),
                     todos.getString("email"),
