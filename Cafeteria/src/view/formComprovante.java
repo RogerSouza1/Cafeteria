@@ -164,7 +164,7 @@ public class formComprovante extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(comboPag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnFinalizar)
                     .addComponent(btnVoltar))
                 .addGap(32, 32, 32))

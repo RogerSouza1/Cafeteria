@@ -242,7 +242,7 @@ public class formPedido extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nº", "Mesa", "Item", "Quantidade", "Preço"
+                "Nº", "Comanda", "Item", "Quantidade", "Preço"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -290,7 +290,7 @@ public class formPedido extends javax.swing.JFrame {
         DefaultTableModel modeltable = (DefaultTableModel) tablePedido.getModel();
 
         int comanda = this.comboComanda.getSelectedIndex();
-        int id = Integer.parseInt(this.txtID.getText());
+
         String produto = (String) this.comboProduto.getSelectedItem();
         int quantidade = (int) this.jSpinner1.getValue();
         String valorString = this.txtValor.getText();
@@ -308,16 +308,24 @@ public class formPedido extends javax.swing.JFrame {
                 ped.setProduto(produto);
                 ped.setQuantidade(quantidade);
                 ped.setValor(totalItem);
-                ped.setId_pedido(id);
 
                 try {
-                    ResultSet resul = u1.buscarPedidos(ped);
-                    
+                    if (txtID.getText().isEmpty()){
+                        u1.inclur(ped);
+                    } else {
+                        int id = Integer.parseInt(txtID.getText());
+                        ped.setId_pedido(id);
+                        ResultSet resul = u1.buscarID(ped);
                     if (resul.next()) {
                         u1.alterar(ped);
                     } else {
                         u1.inclur(ped);
                     }
+                    }
+                    
+                    txtID.setText("");
+                    
+                    
                 } catch (SQLException err) {
                     JOptionPane.showMessageDialog(null, err.getMessage());
                 }
@@ -407,8 +415,8 @@ public class formPedido extends javax.swing.JFrame {
         PedidoDAO p1 = new PedidoDAO();
         Pedido ped = new Pedido();
 
-        int[] comandas = new int[20];
-        for (int i = 0; i < 20; i++) {
+        int[] comandas = new int[21];
+        for (int i = 1; i <= 20; i++) {
             comandas[i] = i;
         }
 

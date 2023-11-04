@@ -9,6 +9,7 @@ import controller.PedidoDAO;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -161,8 +162,12 @@ public class formPagamento extends javax.swing.JFrame {
         Pagamento pag = new Pagamento();
 
         int comanda = this.comboComanda.getSelectedIndex();
+        
+        double totalComanda = this.totalComanda(comanda);
+        DecimalFormat decimalFormat = new DecimalFormat("R$ #,##0.00");
+        String formattedTotal = decimalFormat.format(totalComanda);
 
-        this.txtTotal.setText(String.valueOf(this.totalComanda(comanda)));
+        this.txtTotal.setText(formattedTotal);
     }//GEN-LAST:event_comboComandaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -186,8 +191,8 @@ public class formPagamento extends javax.swing.JFrame {
     private void btnfecharComandaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnfecharComandaMouseClicked
         PagamentoDAO p = new PagamentoDAO();
 
-        int[] comandas = new int[20];
-        for (int i = 0; i < 20; i++) {
+        int[] comandas = new int[21];
+        for (int i = 0; i <= 20; i++) {
             comandas[i] = i;
         }
         
@@ -196,6 +201,7 @@ public class formPagamento extends javax.swing.JFrame {
         if (comanda != 0) {
             String totalText = this.txtTotal.getText();
             if (!totalText.isEmpty()) {
+                totalText = totalText.replace("R$", "").replace(",", ".");
                 double total = Double.parseDouble(totalText);
 
                 if (total != 0) {

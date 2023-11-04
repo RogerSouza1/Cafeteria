@@ -55,10 +55,12 @@ public class UsuarioDAO extends ConectarDAO {
     
     public ResultSet validarLogin(String login, String senha) {
         
-        sql = "Select * from usuario where email ='" + login + "' and senha ='" + senha + "'";
-        System.out.println(sql);
+        sql = "Select * from usuario where binary email = ? and binary senha = ?";
+
         try {
             ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setString(1, login);
+            ps.setString(2, senha);
             ResultSet resul = ps.executeQuery();
             return resul;
         } catch (SQLException err) {

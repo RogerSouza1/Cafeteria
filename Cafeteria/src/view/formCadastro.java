@@ -276,30 +276,37 @@ public class formCadastro extends javax.swing.JFrame {
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
 
         Usuario Lu = new Usuario();
-        Lu.setId_nivelAdm(comboxAdm.getSelectedIndex());
-        Lu.setCPF(this.txtCPF.getText());
-        Lu.setNome(this.txtNome.getText());
-        Lu.setTelefone(this.txtTelefone.getText());
-        Lu.setEmail(this.txtEmail.getText());
-        Lu.setSenha(this.txtSenha.getText());
 
-        this.txtNome.setText("");
-        this.txtCPF.setText("");
-        this.txtEmail.setText("");
-        this.txtTelefone.setText("");
-        this.txtSenha.setText("");
+        String cpf = txtCPF.getText();
 
-        UsuarioDAO u1 = new UsuarioDAO();
-        ResultSet resul = u1.buscar(Lu);
-        try {
-            if (resul.next()) { // caso exista o cpf então chama u1.alterar()
-                u1.alterar(Lu);
-            } else {
-                u1.incluir(Lu);// caseo não exista o cpf chama u1.incluir()
+        boolean camposValidos = validarCampos();
+
+        if (camposValidos == true) {
+            Lu.setId_nivelAdm((int) comboxAdm.getSelectedIndex());
+            Lu.setCPF(this.txtCPF.getText());
+            Lu.setNome(this.txtNome.getText());
+            Lu.setTelefone(this.txtTelefone.getText());
+            Lu.setEmail(this.txtEmail.getText());
+            Lu.setSenha(this.txtSenha.getText());
+
+            UsuarioDAO u1 = new UsuarioDAO();
+            ResultSet resul = u1.buscar(Lu);
+            try {
+                if (resul.next()) { // caso exista o cpf então chama u1.alterar()
+                    u1.alterar(Lu);
+                } else {
+                    u1.incluir(Lu);// caseo não exista o cpf chama u1.incluir()
+                }
+            } catch (SQLException err) {
+                JOptionPane.showMessageDialog(null,
+                        err.getMessage());
             }
-        } catch (SQLException err) {
-            JOptionPane.showMessageDialog(null,
-                    err.getMessage());
+
+            this.txtNome.setText("");
+            this.txtCPF.setText("");
+            this.txtEmail.setText("");
+            this.txtTelefone.setText("");
+            this.txtSenha.setText("");
         }
 
         this.carregar_usuarios();
@@ -376,7 +383,7 @@ public class formCadastro extends javax.swing.JFrame {
         obj.setCPF((String) chave);
         UsuarioDAO u1 = new UsuarioDAO();
         ResultSet resul = u1.buscar(obj);
-        
+
         try {
             if (resul.next()) {
                 this.txtCPF.setText(resul.getString("cpf"));
@@ -453,6 +460,52 @@ public class formCadastro extends javax.swing.JFrame {
         } catch (SQLException err) {
             JOptionPane.showMessageDialog(null, err.getMessage());
         }
+    }
+
+    private boolean validarCampos() {
+
+        // Validação do CPF
+        String cpf = txtCPF.getText().replaceAll("\\D", ""); // Remove caracteres não numéricos
+        if (cpf.length() != 11) {
+            JOptionPane.showMessageDialog(this, "Erro: CPF deve conter 11 dígitos.");
+            this.txtCPF.setText("");
+            return false;
+        }
+
+        // Validação do Nome
+        String nome = txtNome.getText();
+        if (nome.length() > 50) {
+            JOptionPane.showMessageDialog(this, "Erro: Nome deve conter no máximo 50 caracteres.");
+            this.txtNome.setText("");
+            return false;
+        }
+
+        // Validação do Telefone
+        String telefone = txtTelefone.getText().replaceAll("\\D", ""); // Remove caracteres não numéricos
+        if (telefone.length() < 10 || telefone.length() > 11) {
+            JOptionPane.showMessageDialog(this, "Erro: Telefone deve conter 10 ou 11 dígitos.");
+            this.txtTelefone.setText("");
+            return false;
+        }
+
+        // Validação do Email
+        String email = txtEmail.getText();
+        if (!email.contains("@")) {
+            this.txtEmail.setText("");
+            JOptionPane.showMessageDialog(this, "Erro: Email deve conter '@'.");
+            return false;
+        }
+
+        // Validação da Senha
+        String senha = txtSenha.getText();
+        if (senha.length() < 8 || !senha.matches(".*[A-Z].*") || !senha.matches(".*\\d.*")) {
+            this.txtSenha.setText("");
+            JOptionPane.showMessageDialog(this, "Erro: Senha deve conter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula e um número.");
+            return false;
+        }
+
+        // Todos os campos estão válidos
+        return true;
     }
 
 

@@ -31,9 +31,12 @@ public class formLogin extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel1.setLayout(null);
 
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Login");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(62, 44, 60, 16);
 
         btnEntrar.setBackground(new java.awt.Color(204, 204, 204));
         btnEntrar.setForeground(new java.awt.Color(51, 51, 51));
@@ -48,60 +51,33 @@ public class formLogin extends javax.swing.JFrame {
                 btnEntrarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnEntrar);
+        btnEntrar.setBounds(160, 220, 136, 37);
 
         txtLogin.setBackground(new java.awt.Color(204, 204, 204));
         txtLogin.setForeground(new java.awt.Color(51, 51, 51));
+        jPanel1.add(txtLogin);
+        txtLogin.setBounds(62, 78, 332, 22);
 
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Senha");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(62, 118, 70, 16);
 
         txtSenha.setBackground(new java.awt.Color(204, 204, 204));
         txtSenha.setForeground(new java.awt.Color(51, 51, 51));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1))
-                            .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(74, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
-        );
+        jPanel1.add(txtSenha);
+        txtSenha.setBounds(62, 152, 332, 22);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
         );
 
         pack();

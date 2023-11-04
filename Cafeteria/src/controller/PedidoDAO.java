@@ -43,6 +43,18 @@ public class PedidoDAO extends ConectarDAO {
             return null;
         }
     }
+    
+    public ResultSet buscarID (Pedido ped){
+        sql = "SELECT * FROM PEDIDO WHERE id_Pedido = ?";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, ped.getId_pedido());
+            return ps.executeQuery();
+        } catch (SQLException err){
+            return null;
+        }
+    }
 
     public ResultSet buscarTodos() {
         sql = "SELECT * FROM PEDIDO ORDER BY id_Pedido";

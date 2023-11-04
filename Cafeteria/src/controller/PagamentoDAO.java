@@ -15,7 +15,7 @@ public class PagamentoDAO extends ConectarDAO {
     public PagamentoDAO() {
         super();
     }
-
+    
     public ResultSet buscarPedidos(int comanda) {
         sql = "SELECT * FROM PEDIDO WHERE comanda = ?";
 
@@ -68,9 +68,9 @@ public class PagamentoDAO extends ConectarDAO {
             JOptionPane.showMessageDialog(null, "Erro ao realizar a consulta e/ou atualização: " + err.getMessage());
         }
     }
+    
 
-
-public ResultSet buscarTodosPag() {
+    public ResultSet buscarTodosPag() {
         sql = "SELECT * FROM PAGAMENTO ORDER BY id_Pagamento";
 
         try {
@@ -81,7 +81,7 @@ public ResultSet buscarTodosPag() {
             return null;
         }
     }
-
+    
     public ResultSet buscarComandaPag(int comanda) {
         sql = "SELECT * FROM PAGAMENTO WHERE comanda = ? AND pedidoFechado = 'N'";
 
